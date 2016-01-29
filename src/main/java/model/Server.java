@@ -2,11 +2,13 @@ package model;
 
 public class Server {
 
-    public final int size, capacity;
+    public final int size, capacity, index;
 
-    public Server(int size, int capacity) {
+
+    public Server(int size, int capacity, int index) {
         this.size = size;
         this.capacity = capacity;
+        this.index = index;
     }
 
     @Override

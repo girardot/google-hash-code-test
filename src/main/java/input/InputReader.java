@@ -34,7 +34,7 @@ public class InputReader {
         for (int i = 0; i < line1.server; i++) {
             String line = scanner.nextLine();
             String[] split1 = line.split(" ");
-            servers.add(new Server(Integer.parseInt(split1[0]), parseInt(split1[1])));
+            servers.add(new Server(Integer.parseInt(split1[0]), parseInt(split1[1]), i));
         }
 
         return new DataCenter(line1, servers, slotUnavalable);
