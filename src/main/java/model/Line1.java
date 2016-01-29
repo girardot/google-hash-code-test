@@ -2,13 +2,13 @@ package model;
 
 public class Line1 {
 
-    public final int row, slot, slotUnavable, pool, server;
+    public final int row, nbSlot, slotUnavable, nbPool, server;
 
-    public Line1(int row, int slot, int slotUnavable, int pool, int server) {
+    public Line1(int row, int nbSlot, int slotUnavable, int nbPool, int server) {
         this.row = row;
-        this.slot = slot;
+        this.nbSlot = nbSlot;
         this.slotUnavable = slotUnavable;
-        this.pool = pool;
+        this.nbPool = nbPool;
         this.server = server;
     }
 
@@ -16,9 +16,9 @@ public class Line1 {
     public String toString() {
         return "Line1{" +
                 "row=" + row +
-                ", slot=" + slot +
+                ", nbSlot=" + nbSlot +
                 ", slotUnavable=" + slotUnavable +
-                ", pool=" + pool +
+                ", nbPool=" + nbPool +
                 ", server=" + server +
                 '}';
     }

@@ -20,4 +20,13 @@ public class ServerOutput {
         return "x";
     }
 
+    @Override
+    public String toString() {
+        return "ServerOutput{" +
+                "row=" + row +
+                ", slot=" + slot +
+                ", pool=" + pool +
+                ", placed=" + placed +
+                '}';
+    }
 }
