@@ -15,6 +15,7 @@ public class Car {
     public Car(int timer, Junction startJunction) {
         this.timer = timer;
         this.lastJunction = startJunction;
+        junctions.add(startJunction);
     }
 
     public boolean browse(Street street) {

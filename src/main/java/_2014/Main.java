@@ -16,7 +16,7 @@ import static _2014.process.Processor.process;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-        City city = read(new File("src/main/resources/cars-test.in"));
+        City city = read(new File("src/main/resources/cars.in"));
 
         for (Junction junction : city.junctions) {
             System.out.println(junction.index);
