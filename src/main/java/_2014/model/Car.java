@@ -10,13 +10,20 @@ public class Car {
 
     public final List<Junction> junctions = Lists.newArrayList();
 
-    public Car(int timer) {
+    public Junction lastJunction;
+
+    public Car(int timer, Junction startJunction) {
         this.timer = timer;
+        this.lastJunction = startJunction;
     }
 
     public boolean browse(Street street) {
         if (canBrowse(street)) {
-            junctions.add(street.second);
+
+            Junction junction = street.second;
+
+            junctions.add(junction);
+            lastJunction = junction;
             timer -= street.time;
             return true;
         }

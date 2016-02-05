@@ -33,6 +33,17 @@ public class InputReader {
         for (int i = 0; i < descriptor.streets; i++) {
             fLine = scanner.nextLine().split(" ");
             streets.add(new Street(junctions.get(parseInt(fLine[0])), junctions.get(parseInt(fLine[1])), parseInt(fLine[2]), parseInt(fLine[3]), parseInt(fLine[4])));
+            if (parseInt(fLine[2]) == 2) {
+                streets.add(new Street(junctions.get(parseInt(fLine[1])), junctions.get(parseInt(fLine[0])), parseInt(fLine[2]), parseInt(fLine[3]), parseInt(fLine[4])));
+            }
+        }
+
+        for (Street street : streets) {
+            for (Junction junction : junctions) {
+                if (street.first.index == junction.index) {
+                    junction.streets.add(street);
+                }
+            }
         }
 
         return new City(descriptor, junctions, streets);
