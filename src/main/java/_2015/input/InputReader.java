@@ -1,10 +1,10 @@
-package input;
+package _2015.input;
 
 import com.google.common.collect.Lists;
-import model.DataCenter;
-import model.Line1;
-import model.Server;
-import model.SlotUnavalable;
+import _2015.model.DataCenter;
+import _2015.model.Line1;
+import _2015.model.Server;
+import _2015.model.SlotUnavalable;
 
 import java.io.File;
 import java.io.FileNotFoundException;

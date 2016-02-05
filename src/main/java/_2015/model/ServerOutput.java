@@ -1,4 +1,4 @@
-package model;
+package _2015.model;
 
 public class ServerOutput {
 

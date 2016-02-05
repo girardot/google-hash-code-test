@@ -1,13 +1,15 @@
-import input.InputReader;
-import model.DataCenter;
-import model.ServerOutput;
-import output.Writer;
-import process.SimpleProcessor;
+package _2015;
+
+import _2015.input.InputReader;
+import _2015.model.DataCenter;
+import _2015.model.ServerOutput;
+import _2015.output.Writer;
+import _2015.process.SimpleProcessor;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import static score.ScoreProcessor.computeScore;
+import static _2015.score.ScoreProcessor.computeScore;
 
 public class Main {
 

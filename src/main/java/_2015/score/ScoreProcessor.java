@@ -1,9 +1,9 @@
-package score;
+package _2015.score;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import model.DataCenter;
-import model.ServerOutput;
+import _2015.model.DataCenter;
+import _2015.model.ServerOutput;
 
 import java.util.Collection;
 import java.util.List;

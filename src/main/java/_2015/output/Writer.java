@@ -1,6 +1,6 @@
-package output;
+package _2015.output;
 
-import model.ServerOutput;
+import _2015.model.ServerOutput;
 
 import java.util.List;
 
