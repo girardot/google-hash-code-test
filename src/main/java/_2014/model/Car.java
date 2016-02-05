@@ -14,9 +14,21 @@ public class Car {
         this.timer = timer;
     }
 
-    public void browse(Street street) {
-        junctions.add(street.second);
-        timer -= street.time;
+    public boolean browse(Street street) {
+        if (canBrowse(street)) {
+            junctions.add(street.second);
+            timer -= street.time;
+            return true;
+        }
+        return false;
     }
+
+    private boolean canBrowse(Street street) {
+        if (timer >= street.time) {
+            return true;
+        }
+        return false;
+    }
+
 
 }
