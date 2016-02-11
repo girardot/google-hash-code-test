@@ -5,13 +5,13 @@ import java.util.List;
 
 public class World {
 
-    private final int rows;
-    private final int columns;
-    private final int drones;
-    private final int turns;
-    private final int maxPayLoad;
-    public  List<Warehouse> warehouses;
-    public  List<Order> orders;
+    public final int rows;
+    public final int columns;
+    public final int drones;
+    public final int turns;
+    public final int maxPayLoad;
+    public List<Warehouse> warehouses;
+    public List<Order> orders;
     public int[] productTypeWeigh;
 
 

@@ -26,23 +26,28 @@ public class Drone {
     }
 
     public void load(int productType, int numberProduct, Warehouse warehouse) {
-        numberTurn -= distance(warehouse.position) + 1;
+        moveTo(warehouse.position);
         instructions.add(new Instruction(InstructionType.LOAD, warehouse.index, productType, numberProduct, 0));
         position = warehouse.position;
     }
 
-    private int distance(Position position) {
-        return (int) Math.ceil(sqrt(pow(position.x - this.position.x, 2) + pow(position.y - this.position.y, 2)));
-    }
-
     public void deliver(int productType, int numberProduct, Order order) {
-        numberTurn -= distance(order.position) + 1;
+        moveTo(order.position);
         instructions.add(new Instruction(InstructionType.DELIVER, 0, productType, numberProduct, order.index));
         position = order.position;
     }
 
-    private int distance(int warehouse) {
-        return 0;
+    private void moveTo(Position position) {
+        int numberTurnTmp = numberTurn - (distance(position) + 1);
+        if (numberTurnTmp < 0) {
+            throw new RuntimeException("stop");
+        } else {
+            numberTurn = numberTurnTmp;
+        }
+    }
+
+    private int distance(Position position) {
+        return (int) Math.ceil(sqrt(pow(position.x - this.position.x, 2) + pow(position.y - this.position.y, 2)));
     }
 
     public void write(Writer writer) throws IOException {
