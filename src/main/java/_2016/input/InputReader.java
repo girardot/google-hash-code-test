@@ -8,12 +8,11 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.lang.Integer.parseInt;
@@ -58,14 +57,10 @@ public class InputReader {
 
     }
 
-    private List<Item> parseOrderItems(int[] itemsLine) {
-        Map<Integer, Integer> countByType = new HashMap<>();
-        for (int itemType : itemsLine) {
-            countByType.merge(itemType, 1, (old, newa) -> old++);
-        }
+    private List<OrderItem> parseOrderItems(int[] itemsLine) {
 
-        return countByType.entrySet().stream()
-                .map(entry -> new Item(entry.getKey(), entry.getValue()))
+        return IntStream.of(itemsLine)
+                .mapToObj(type -> new OrderItem(type, 1))
                 .collect(Collectors.toList());
     }
 

@@ -18,7 +18,10 @@ public class WriterTest {
         Item i1 = new Item(0, 5);
         Item i2 = new Item(1, 10);
 
-        Order order1 = new Order(0, new Position(1, 2), newArrayList(i1, i2));
+        OrderItem iO1 = new OrderItem(0, 5);
+        OrderItem iO2 = new OrderItem(1, 10);
+
+        Order order1 = new Order(0, new Position(1, 2), newArrayList(iO1, iO2));
 
         Warehouse w1 = new Warehouse(0, new Position(3, 4), newArrayList(i1));
         Warehouse w2 = new Warehouse(0, new Position(3, 4), newArrayList(i1));

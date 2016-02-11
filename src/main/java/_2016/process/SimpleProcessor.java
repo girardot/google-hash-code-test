@@ -1,8 +1,8 @@
 package _2016.process;
 
 import _2016.model.Drone;
-import _2016.model.Item;
 import _2016.model.Order;
+import _2016.model.OrderItem;
 import _2016.model.World;
 import com.google.common.collect.Lists;
 
@@ -21,7 +21,8 @@ public class SimpleProcessor implements Processor {
         int droneId = 0;
         int dropNumber = drones.size();
         for (Order order : world.orders) {
-            for (Item item : order.expecteditems) {
+            System.out.println("order = " + order);
+            for (OrderItem item : order.expecteditems) {
                 System.out.println(item.toString());
                 Drone drone = drones.get(droneId % dropNumber);
                 drone.load(item.type, item.count, world.warehouses.get(0));
