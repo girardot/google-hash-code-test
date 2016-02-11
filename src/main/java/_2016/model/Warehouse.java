@@ -4,5 +4,11 @@ import java.util.List;
 
 public class Warehouse {
 
-    public List<Item> items;
+    public final List<Item> items;
+    public final Position position;
+
+    public Warehouse(List<Item> items, Position position) {
+        this.items = items;
+        this.position = position;
+    }
 }
