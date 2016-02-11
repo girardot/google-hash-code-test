@@ -28,14 +28,19 @@ public class Drone {
 
     public void load(int productType, int numberProduct, Warehouse warehouse) {
         moveTo(warehouse.position);
-        instructions.add(new Instruction(InstructionType.LOAD, warehouse.index, productType, numberProduct, 0));
-        position = warehouse.position;
+        if (canFly()) {
+            instructions.add(new Instruction(InstructionType.LOAD, warehouse.index, productType, numberProduct, 0));
+            position = warehouse.position;
+            warehouse.decrement(productType, numberProduct);
+        }
     }
 
     public void deliver(int productType, int numberProduct, Order order) {
         moveTo(order.position);
-        instructions.add(new Instruction(InstructionType.DELIVER, 0, productType, numberProduct, order.index));
-        position = order.position;
+        if (canFly()) {
+            instructions.add(new Instruction(InstructionType.DELIVER, 0, productType, numberProduct, order.index));
+            position = order.position;
+        }
     }
 
     private void moveTo(Position position) {

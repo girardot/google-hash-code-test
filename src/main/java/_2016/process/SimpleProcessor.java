@@ -1,9 +1,6 @@
 package _2016.process;
 
-import _2016.model.Drone;
-import _2016.model.Order;
-import _2016.model.OrderItem;
-import _2016.model.World;
+import _2016.model.*;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -34,14 +31,27 @@ public class SimpleProcessor implements Processor {
                     }
                 }
                 Drone drone = currentDrone;
-                //Drone drone = nextAvalableDrone(drones, droneId, dropNumber);
-                drone.load(item.type, item.count, world.warehouses.get(0));
-                drone.deliver(item.type, item.count, order);
+                Warehouse warehouse = nextWarehouse(world, item.type);
+                if (warehouse != null) {
+                    drone.load(item.type, item.count, warehouse);
+                    drone.deliver(item.type, item.count, order);
+                }
+
                 droneId++;
             }
         }
 
         return drones;
+    }
+
+    private Warehouse nextWarehouse(World world, int type) {
+        for (int i = 0; i < world.warehouses.size(); i++) {
+            boolean isPresent = world.warehouses.get(i).items.stream().anyMatch(item -> item.type == type);
+            if (isPresent) {
+                return world.warehouses.get(i);
+            }
+        }
+        return null;
     }
 
     private Drone nextAvalableDrone(List<Drone> drones, int droneId, int droneNumber) {

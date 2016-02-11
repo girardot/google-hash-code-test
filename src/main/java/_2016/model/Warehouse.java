@@ -21,4 +21,15 @@ public class Warehouse {
                 ", position=" + position +
                 '}';
     }
+
+    public void decrement(int productType, int numberProduct) {
+
+        for (int i = 0; i < numberProduct; i++) {
+            items.stream()
+                    .filter(item -> item.type == productType)
+                    .findFirst().ifPresent(items::remove);
+        }
+
+
+    }
 }
