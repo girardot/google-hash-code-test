@@ -44,7 +44,7 @@ public class InputReader {
 
         List<Warehouse> warehouses = new ArrayList<>();
         for (int i = 0; i < warehouseCount; i++) {
-            Warehouse warehouse = new Warehouse(parsePosition(collectedLines.get(4 + (i * 2))), parseItems(collectedLines.get(5 + (i*2))));
+            Warehouse warehouse = new Warehouse(i, parsePosition(collectedLines.get(4 + (i * 2))), parseItems(collectedLines.get(5 + (i * 2))));
             warehouses.add(warehouse);
         }
         return warehouses;
