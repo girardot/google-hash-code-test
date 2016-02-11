@@ -28,30 +28,32 @@ public class Main {
             List<Drone> drones = simpleProcessor.process(world);
 
             int weight = 0;
-            ArrayList<Instruction> instructions = new ArrayList<>();
-            ArrayList<Instruction> delivers = new ArrayList<>();
 
             for (Drone drone : drones) {
-                for (Instruction instruction : drone.instructions  ) {
+                ArrayList<Instruction> instructions = new ArrayList<>();
+                ArrayList<Instruction> delivers = new ArrayList<>();
+
+                for (Instruction instruction : drone.instructions) {
                     if (instruction.instructionType == InstructionType.LOAD) {
                         int tmpWeight = weight + world.productTypeWeigh[instruction.productType];
 
                         if (tmpWeight < world.maxPayLoad) {
                             instructions.add(instruction);
                             weight = tmpWeight;
-                        }
-                        else {
+                        } else {
                             instructions.addAll(delivers);
                             weight = 0;
                             delivers.clear();
                         }
 
-                    }
-                    else {
+                    } else {
                         delivers.add(instruction);
                     }
                 }
+                drone.instructions.clear();
+                drone.instructions.addAll(instructions);
             }
+
 
             System.out.println("Score => " + computeScore(world, drones));
             Writer writer = new Writer();
