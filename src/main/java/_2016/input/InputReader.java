@@ -1,6 +1,5 @@
 package _2016.input;
 
-import _2016.model.Grid;
 import _2016.model.World;
 
 import java.io.FileNotFoundException;
@@ -20,9 +19,9 @@ public class InputReader {
 
         try (Stream<String> lines = Files.lines(Paths.get(InputReader.class.getResource(fileName).toURI()))) {
 
-            List<String>  collectedLines=lines.collect(Collectors.toList());
+            List<String> collectedLines = lines.collect(Collectors.toList());
 
-            Grid grid = parseGrid(collectedLines.get(0));
+            World world = initWorld(collectedLines.get(0));
 
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
@@ -30,14 +29,14 @@ public class InputReader {
         return null;
     }
 
-    private Grid parseGrid(String line) {
-        Grid grid = new Grid();
+    private World initWorld(String line) {
+        World world = new World();
 
         Pattern pattern = Pattern.compile("(\\d) (\\d) (\\d) (\\d) (\\d)");
         Matcher matcher = pattern.matcher(line);
 
 
-        return grid;
+        return world;
     }
 
 }
