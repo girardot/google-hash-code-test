@@ -19,14 +19,14 @@ public class SimpleProcessor implements Processor {
         }
 
         int droneId = 0;
-        int dropNumber = drones.size();
+        int droneNumber = drones.size();
         for (Order order : world.orders) {
             System.out.println("order = " + order);
             for (OrderItem item : order.expecteditems) {
                 System.out.println(item.toString());
                 Drone currentDrone;
                 while (true) {
-                    currentDrone = drones.get(droneId % dropNumber);
+                    currentDrone = drones.get(droneId % droneNumber);
                     if (currentDrone.canFly()) {
                         break;
                     } else {
