@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -46,7 +49,7 @@ public class InputReader {
             String positionLine = collectedLines.get(orderPosition++);
             int itemCount = parseInt(collectedLines.get(orderPosition++));
             int[] itemsLine = Stream.of(collectedLines.get(orderPosition++).split(" ")).mapToInt(Integer::parseInt).toArray();
-            orders.add(new Order(parsePosition(positionLine), parseOrderItems(itemCount, itemsLine)));
+            orders.add(new Order(i, parsePosition(positionLine), parseOrderItems(itemCount, itemsLine)));
 
         }
 
