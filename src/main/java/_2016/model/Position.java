@@ -1,6 +1,10 @@
 package _2016.model;
 
+import java.util.Comparator;
 import java.util.Objects;
+
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 public class Position {
 
@@ -32,5 +36,21 @@ public class Position {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+
+    public Comparator<Position> nearPositionComparator() {
+        Position current = this;
+        return (o1, o2) -> {
+            Integer distanceO1 = o1.distance(current);
+            Integer distanceO2 = o2.distance(current);
+
+            return distanceO1.compareTo(distanceO2);
+
+        };
+    }
+
+    private int distance(Position position) {
+        return (int) Math.ceil(sqrt(pow(position.x - this.x, 2) + pow(position.y - this.y, 2)));
     }
 }

@@ -14,6 +14,11 @@ public class Warehouse {
         this.position = position;
     }
 
+    public boolean containsItemsWithType(int type){
+        return items.stream()
+                .anyMatch(item -> item.type == type);
+    }
+
     @Override
     public String toString() {
         return "Warehouse{" +

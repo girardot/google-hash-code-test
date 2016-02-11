@@ -1,6 +1,7 @@
 package _2016.model;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class World {
@@ -38,13 +39,12 @@ public class World {
                 '}';
     }
 
-    public Warehouse nextWarehouse(int type) {
-        for (int i = 0; i < warehouses.size(); i++) {
-            boolean isPresent = warehouses.get(i).items.stream().anyMatch(item -> item.type == type);
-            if (isPresent) {
-                return warehouses.get(i);
-            }
-        }
-        return null;
+    public Warehouse nextWarehouse(int type, Position dronePosition) {
+
+        return warehouses.stream()
+                .filter(warehouse -> warehouse.containsItemsWithType(type))
+                .sorted(Comparator.comparing(warehouse -> warehouse.position, dronePosition.nearPositionComparator()))
+                .findFirst().orElse(null);
+
     }
 }

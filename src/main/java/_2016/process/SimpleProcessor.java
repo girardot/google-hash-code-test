@@ -31,7 +31,7 @@ public class SimpleProcessor implements Processor {
                     }
                 }
                 Drone drone = currentDrone;
-                Warehouse warehouse = world.nextWarehouse(item.type);
+                Warehouse warehouse = world.nextWarehouse(item.type, drone.position);
                 if (warehouse != null) {
                     drone.load(item.type, item.count, warehouse);
                     drone.deliver(item.type, item.count, order);
