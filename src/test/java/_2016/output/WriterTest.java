@@ -43,6 +43,6 @@ public class WriterTest {
         drones.add(drone1);
 
         // Then
-        writer.write(drones);
+        writer.write(drones, "output.txt");
     }
 }

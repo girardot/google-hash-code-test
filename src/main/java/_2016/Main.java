@@ -15,15 +15,19 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         InputReader inputReader = new InputReader();
-        World world = inputReader.parse("/simple");
-        System.out.println(world);
+        String[] fileNames = {"busy_day.in", "redundancy.in", "mother_of_all_warehouses.in"};
+        for (String fileName : fileNames) {
+            World world = inputReader.parse("/" + fileName);
+            System.out.println(world);
 
-        SimpleProcessor simpleProcessor = new SimpleProcessor();
+            SimpleProcessor simpleProcessor = new SimpleProcessor();
 
-        List<Drone> drones = simpleProcessor.process(world);
-        System.out.println("Score => " + computeScore(world, drones));
-        Writer writer = new Writer();
-        writer.write(drones);
+            List<Drone> drones = simpleProcessor.process(world);
+            System.out.println("Score => " + computeScore(world, drones));
+            Writer writer = new Writer();
+            writer.write(drones, "output_" + fileName);
+        }
+
     }
 
 }
