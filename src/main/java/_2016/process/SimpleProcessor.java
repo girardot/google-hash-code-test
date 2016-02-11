@@ -22,7 +22,8 @@ public class SimpleProcessor implements Processor {
         int dropNumber = drones.size();
         for (Order order : world.orders) {
             for (Item item : order.expecteditems) {
-                Drone drone = drones.get(droneId % 3);
+                System.out.println(item.toString());
+                Drone drone = drones.get(droneId % dropNumber);
                 drone.load(item.type, item.count, world.warehouses.get(0));
                 drone.deliver(item.type, item.count, order);
                 droneId++;
