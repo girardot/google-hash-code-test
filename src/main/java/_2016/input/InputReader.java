@@ -1,17 +1,13 @@
 package _2016.input;
 
-import _2016.model.Item;
-import _2016.model.Position;
-import _2016.model.Warehouse;
-import _2016.model.World;
+import _2016.model.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -30,6 +26,7 @@ public class InputReader {
             World world = initWorld(collectedLines.get(0));
             world.productTypeWeigh = retrieveProductTypeWeigh(collectedLines);
             world.warehouses = retrieveWarehouses(collectedLines);
+            world.orders = retrieveOrders(collectedLines, world.warehouses.size());
 
             return world;
 
@@ -39,12 +36,41 @@ public class InputReader {
         return null;
     }
 
+    private List<Order> retrieveOrders(List<String> collectedLines, int warehouseSize) {
+        int orderPosition = 4 + (warehouseSize * 2);
+        int orderCount = parseInt(collectedLines.get(orderPosition++));
+
+        List<Order> orders = new ArrayList<>();
+        for (int i = 0; i < orderCount; i++) {
+
+            String positionLine = collectedLines.get(orderPosition++);
+            int itemCount = parseInt(collectedLines.get(orderPosition++));
+            int[] itemsLine = Stream.of(collectedLines.get(orderPosition++).split(" ")).mapToInt(Integer::parseInt).toArray();
+            orders.add(new Order(parsePosition(positionLine), parseOrderItems(itemCount, itemsLine)));
+
+        }
+
+        return orders;
+
+    }
+
+    private List<Item> parseOrderItems(int itemCount, int[] itemsLine) {
+        Map<Integer, Integer> countByType = new HashMap<>();
+        for (int itemType : itemsLine) {
+            countByType.merge(itemType, 1, (old, newa) -> old++);
+        }
+
+        return countByType.entrySet().stream()
+                .map(entry -> new Item(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
     private List<Warehouse> retrieveWarehouses(List<String> collectedLines) {
         int warehouseCount = parseInt(collectedLines.get(3));
 
         List<Warehouse> warehouses = new ArrayList<>();
         for (int i = 0; i < warehouseCount; i++) {
-            Warehouse warehouse = new Warehouse(parsePosition(collectedLines.get(4 + (i * 2))), parseItems(collectedLines.get(5 + (i*2))));
+            Warehouse warehouse = new Warehouse(parsePosition(collectedLines.get(4 + (i * 2))), parseItems(collectedLines.get(5 + (i * 2))));
             warehouses.add(warehouse);
         }
         return warehouses;

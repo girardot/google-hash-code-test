@@ -11,4 +11,12 @@ public class Order {
         this.position = position;
         this.expecteditems = expecteditems;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "position=" + position +
+                ", expecteditems=" + expecteditems +
+                '}';
+    }
 }
