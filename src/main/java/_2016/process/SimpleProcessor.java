@@ -24,7 +24,17 @@ public class SimpleProcessor implements Processor {
             System.out.println("order = " + order);
             for (OrderItem item : order.expecteditems) {
                 System.out.println(item.toString());
-                Drone drone = drones.get(droneId % dropNumber);
+                Drone currentDrone;
+                while (true) {
+                    currentDrone = drones.get(droneId % dropNumber);
+                    if (currentDrone.canFly()) {
+                        break;
+                    } else {
+                        droneId++;
+                    }
+                }
+                Drone drone = currentDrone;
+                //Drone drone = nextAvalableDrone(drones, droneId, dropNumber);
                 drone.load(item.type, item.count, world.warehouses.get(0));
                 drone.deliver(item.type, item.count, order);
                 droneId++;
@@ -32,6 +42,20 @@ public class SimpleProcessor implements Processor {
         }
 
         return drones;
+    }
+
+    private Drone nextAvalableDrone(List<Drone> drones, int droneId, int droneNumber) {
+        if (droneId > droneNumber) {
+            return null;
+        }
+
+        Drone drone = drones.get(droneId % droneNumber);
+        if (drone.canFly()) {
+            return drone;
+        } else {
+            nextAvalableDrone(drones, droneId + 1, droneNumber);
+        }
+        return drone;
     }
 
 

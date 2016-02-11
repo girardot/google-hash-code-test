@@ -17,6 +17,7 @@ public class Drone {
     public int numberTurn;
 
     public Position position;
+    private boolean canFly = true;
 
     public Drone(int index, int numberTurn, Position position) {
         this.index = index;
@@ -40,7 +41,7 @@ public class Drone {
     private void moveTo(Position position) {
         int numberTurnTmp = numberTurn - (distance(position) + 1);
         if (numberTurnTmp < 0) {
-            throw new RuntimeException("stop");
+            canFly = false;
         } else {
             numberTurn = numberTurnTmp;
         }
@@ -58,6 +59,10 @@ public class Drone {
 
     public int numberInstructions() {
         return instructions.size();
+    }
+
+    public boolean canFly() {
+        return canFly;
     }
 
 }
