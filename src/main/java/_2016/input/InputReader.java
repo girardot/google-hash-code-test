@@ -25,6 +25,8 @@ public class InputReader {
 
             World world = initWorld(collectedLines.get(0));
 
+            world.productTypeWeigh = retrieveProductTypeWeigh(collectedLines);
+
 
             return world;
 
@@ -34,12 +36,22 @@ public class InputReader {
         return null;
     }
 
+    private int[] retrieveProductTypeWeigh(List<String> collectedLines) {
+        String productTypeWeighLine = collectedLines.get(2);
+        String[] weighAsString = productTypeWeighLine.split(" ");
+
+        return Stream.of(weighAsString)
+                .map(value -> Integer.parseInt(value))
+                .mapToInt(i ->i)
+                .toArray();
+    }
+
     private World initWorld(String line) {
 
         Pattern pattern = Pattern.compile("(\\d+) (\\d+) (\\d+) (\\d+) (\\d+)");
         Matcher matcher = pattern.matcher(line);
 
-        if(matcher.find()) {
+        if (matcher.find()) {
             return new World(parseInt(matcher.group(1)), parseInt(matcher.group(2)), parseInt(matcher.group(3)), parseInt(matcher.group(4)), parseInt(matcher.group(5)));
         }
 

@@ -1,5 +1,6 @@
 package _2016.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class World {
@@ -11,6 +12,7 @@ public class World {
     private final int maxPayLoad;
     public  List<Warehouse> warehouses;
     public  List<Order> orders;
+    public int[] productTypeWeigh;
 
 
     public World(int rows, int columns, int drones, int turns, int maxPayLoad) {
@@ -32,6 +34,7 @@ public class World {
                 ", maxPayLoad=" + maxPayLoad +
                 ", warehouses=" + warehouses +
                 ", orders=" + orders +
+                ", productTypeWeigh=" + Arrays.toString(productTypeWeigh) +
                 '}';
     }
 }
