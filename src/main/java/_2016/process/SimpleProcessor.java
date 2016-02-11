@@ -31,7 +31,7 @@ public class SimpleProcessor implements Processor {
                     }
                 }
                 Drone drone = currentDrone;
-                Warehouse warehouse = nextWarehouse(world, item.type);
+                Warehouse warehouse = world.nextWarehouse(item.type);
                 if (warehouse != null) {
                     drone.load(item.type, item.count, warehouse);
                     drone.deliver(item.type, item.count, order);
@@ -42,16 +42,6 @@ public class SimpleProcessor implements Processor {
         }
 
         return drones;
-    }
-
-    private Warehouse nextWarehouse(World world, int type) {
-        for (int i = 0; i < world.warehouses.size(); i++) {
-            boolean isPresent = world.warehouses.get(i).items.stream().anyMatch(item -> item.type == type);
-            if (isPresent) {
-                return world.warehouses.get(i);
-            }
-        }
-        return null;
     }
 
     private Drone nextAvalableDrone(List<Drone> drones, int droneId, int droneNumber) {

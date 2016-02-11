@@ -37,4 +37,14 @@ public class World {
                 ", productTypeWeigh=" + Arrays.toString(productTypeWeigh) +
                 '}';
     }
+
+    public Warehouse nextWarehouse(int type) {
+        for (int i = 0; i < warehouses.size(); i++) {
+            boolean isPresent = warehouses.get(i).items.stream().anyMatch(item -> item.type == type);
+            if (isPresent) {
+                return warehouses.get(i);
+            }
+        }
+        return null;
+    }
 }
