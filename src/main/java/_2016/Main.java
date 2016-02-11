@@ -22,7 +22,7 @@ public class Main {
         List<World> output = simpleProcessor.process(world);
         System.out.println("Score => " + computeScore(world, output));
         Writer writer = new Writer();
-        writer.write(output);
+        //writer.write(output);
     }
 
 }
