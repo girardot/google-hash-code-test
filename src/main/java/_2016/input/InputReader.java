@@ -47,9 +47,10 @@ public class InputReader {
         for (int i = 0; i < orderCount; i++) {
 
             String positionLine = collectedLines.get(orderPosition++);
-            int itemCount = parseInt(collectedLines.get(orderPosition++));
+            orderPosition++;//skip order count
+
             int[] itemsLine = Stream.of(collectedLines.get(orderPosition++).split(" ")).mapToInt(Integer::parseInt).toArray();
-            orders.add(new Order(i, parsePosition(positionLine), parseOrderItems(itemCount, itemsLine)));
+            orders.add(new Order(i, parsePosition(positionLine), parseOrderItems(itemsLine)));
 
         }
 
@@ -57,7 +58,7 @@ public class InputReader {
 
     }
 
-    private List<Item> parseOrderItems(int itemCount, int[] itemsLine) {
+    private List<Item> parseOrderItems(int[] itemsLine) {
         Map<Integer, Integer> countByType = new HashMap<>();
         for (int itemType : itemsLine) {
             countByType.merge(itemType, 1, (old, newa) -> old++);
@@ -72,8 +73,12 @@ public class InputReader {
         int warehouseCount = parseInt(collectedLines.get(3));
 
         List<Warehouse> warehouses = new ArrayList<>();
+        int wareHouseCursor = 4;
         for (int i = 0; i < warehouseCount; i++) {
-            Warehouse warehouse = new Warehouse(i, parsePosition(collectedLines.get(4 + (i * 2))), parseItems(collectedLines.get(5 + (i * 2))));
+            Position position = parsePosition(collectedLines.get(wareHouseCursor++));
+            List<Item> items = parseItems(collectedLines.get(wareHouseCursor++));
+
+            Warehouse warehouse = new Warehouse(i, position, items);
             warehouses.add(warehouse);
         }
         return warehouses;
