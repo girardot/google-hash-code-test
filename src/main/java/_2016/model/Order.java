@@ -7,6 +7,7 @@ public class Order {
     public final int index;
     public final Position position;
     public final List<OrderItem> expecteditems;
+    public Integer completedTurn;
 
     public Order(int index, Position position, List<OrderItem> expecteditems) {
         this.index = index;
