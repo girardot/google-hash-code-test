@@ -1,7 +1,7 @@
 package _2016.input;
 
 import _2016.model.Grid;
-import _2016.model.Input;
+import _2016.model.World;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 public class InputReader {
 
-    public Input parse(String fileName) throws FileNotFoundException {
+    public World parse(String fileName) throws FileNotFoundException {
 
         try (Stream<String> lines = Files.lines(Paths.get(InputReader.class.getResource(fileName).toURI()))) {
 
