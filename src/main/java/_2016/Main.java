@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
         InputReader inputReader = new InputReader();
-        World world = inputReader.parse("empty");
+        World world = inputReader.parse("/simple");
         System.out.println(world);
 
         SimpleProcessor simpleProcessor = new SimpleProcessor();
