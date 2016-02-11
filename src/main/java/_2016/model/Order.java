@@ -14,6 +14,12 @@ public class Order {
         this.expecteditems = expecteditems;
     }
 
+    public long countByType(int type) {
+        return expecteditems.stream()
+                .filter(item -> item.type == type)
+                .count();
+    }
+
     @Override
     public String toString() {
         return "Order{" +
