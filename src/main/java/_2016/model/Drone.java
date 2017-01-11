@@ -36,10 +36,10 @@ public class Drone {
     }
 
     public void deliver(int productType, int numberProduct, Order order) {
-        moveTo(order.position);
+        moveTo(order.destination);
         if (canFly()) {
             instructions.add(new Instruction(InstructionType.DELIVER, 0, productType, numberProduct, order.index));
-            position = order.position;
+            position = order.destination;
         }
     }
 

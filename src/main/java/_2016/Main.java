@@ -35,7 +35,7 @@ public class Main {
 
                 for (Instruction instruction : drone.instructions) {
                     if (instruction.instructionType == InstructionType.LOAD) {
-                        int tmpWeight = weight + world.productTypeWeigh[instruction.productType];
+                        int tmpWeight = weight + world.productTypeWeigh.get(instruction.productType);
 
                         if (tmpWeight < world.maxPayLoad) {
                             instructions.add(instruction);
@@ -44,6 +44,7 @@ public class Main {
                             instructions.addAll(delivers);
                             weight = 0;
                             delivers.clear();
+                            instructions.add(instruction);
                         }
 
                     } else {

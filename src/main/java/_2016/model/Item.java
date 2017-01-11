@@ -17,4 +17,23 @@ public class Item {
                 ", count=" + count +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        if (type != item.type) return false;
+        return count == item.count;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type;
+        result = 31 * result + count;
+        return result;
+    }
 }

@@ -99,14 +99,13 @@ public class InputReader {
         return new Position(parseInt(split[0]), parseInt(split[1]));
     }
 
-    private int[] retrieveProductTypeWeigh(List<String> collectedLines) {
+    private List<Integer> retrieveProductTypeWeigh(List<String> collectedLines) {
         String productTypeWeighLine = collectedLines.get(2);
         String[] weighAsString = productTypeWeighLine.split(" ");
 
         return Stream.of(weighAsString)
                 .map(Integer::parseInt)
-                .mapToInt(i -> i)
-                .toArray();
+                .collect(Collectors.toList());
     }
 
     private World initWorld(String line) {

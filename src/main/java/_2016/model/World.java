@@ -1,6 +1,5 @@
 package _2016.model;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,8 +12,7 @@ public class World {
     public final int maxPayLoad;
     public List<Warehouse> warehouses;
     public List<Order> orders;
-    public int[] productTypeWeigh;
-
+    public List<Integer> productTypeWeigh;
 
     public World(int rows, int columns, int drones, int turns, int maxPayLoad) {
         this.rows = rows;
@@ -35,7 +33,7 @@ public class World {
                 ", maxPayLoad=" + maxPayLoad +
                 ", warehouses=" + warehouses +
                 ", orders=" + orders +
-                ", productTypeWeigh=" + Arrays.toString(productTypeWeigh) +
+                ", productTypeWeigh=" + productTypeWeigh +
                 '}';
     }
 
