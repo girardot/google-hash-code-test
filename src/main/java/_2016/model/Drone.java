@@ -5,6 +5,9 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static _2016.model.Instruction.buildDeliverInstruction;
+import static _2016.model.Instruction.buildLoadInstruction;
+
 public class Drone {
 
     public final int index;
@@ -17,11 +20,11 @@ public class Drone {
     }
 
     public void load(int productType, int numberProduct, Warehouse warehouse) {
-        instructions.add(new Instruction(InstructionType.LOAD, warehouse.index, productType, numberProduct, 0));
+        instructions.add(buildLoadInstruction(warehouse.index, productType, numberProduct));
     }
 
     public void deliver(int productType, int numberProduct, Order order) {
-        instructions.add(new Instruction(InstructionType.DELIVER, 0, productType, numberProduct, order.index));
+        instructions.add(buildDeliverInstruction(order.index, productType, numberProduct));
     }
 
     public void write(Writer writer) throws IOException {

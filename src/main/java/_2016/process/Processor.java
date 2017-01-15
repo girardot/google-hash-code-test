@@ -9,5 +9,4 @@ public interface Processor {
 
     List<Drone> process(World world);
 
-
 }

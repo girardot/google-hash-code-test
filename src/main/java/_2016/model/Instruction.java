@@ -3,24 +3,39 @@ package _2016.model;
 import java.io.IOException;
 import java.io.Writer;
 
+import static _2016.model.InstructionType.DELIVER;
+import static _2016.model.InstructionType.LOAD;
+
 public class Instruction {
 
-    public final InstructionType instructionType;
+    public InstructionType instructionType;
 
-    public final int wareHouse;
+    public int wareHouse;
 
-    public final int productType;
+    public int productType;
 
-    public final int productNumber;
+    public int productNumber;
 
-    public final int customer;
+    public int customer;
 
-    public Instruction(InstructionType instructionType, int wareHouse, int productType, int productNumber, int customer) {
+    private Instruction(InstructionType instructionType) {
         this.instructionType = instructionType;
-        this.wareHouse = wareHouse;
-        this.productType = productType;
-        this.productNumber = productNumber;
-        this.customer = customer;
+    }
+
+    public static Instruction buildLoadInstruction(int wareHouse, int productType, int productNumber) {
+        final Instruction instruction = new Instruction(LOAD);
+        instruction.wareHouse = wareHouse;
+        instruction.productType = productType;
+        instruction.productNumber = productNumber;
+        return instruction;
+    }
+
+    public static Instruction buildDeliverInstruction(int customer, int productType, int productNumber) {
+        final Instruction instruction = new Instruction(DELIVER);
+        instruction.customer = customer;
+        instruction.productType = productType;
+        instruction.productNumber = productNumber;
+        return instruction;
     }
 
     public void write(int drone, Writer writer) throws IOException {
