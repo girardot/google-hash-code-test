@@ -20,11 +20,11 @@ public class Drone {
     }
 
     public void load(int productType, int numberProduct, Warehouse warehouse) {
-        instructions.add(buildLoadInstruction(warehouse.index, productType, numberProduct));
+        instructions.add(buildLoadInstruction(warehouse, productType, numberProduct));
     }
 
     public void deliver(int productType, int numberProduct, Order order) {
-        instructions.add(buildDeliverInstruction(order.index, productType, numberProduct));
+        instructions.add(buildDeliverInstruction(order, productType, numberProduct));
     }
 
     public void write(Writer writer) throws IOException {
