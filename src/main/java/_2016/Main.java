@@ -8,6 +8,8 @@ import _2016.model.World;
 import _2016.output.Writer;
 import _2016.process.SimpleProcessor;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +60,7 @@ public class Main {
 
             System.out.println("Score => " + computeScore(world, drones));
             Writer writer = new Writer();
-            writer.write(drones, "output_" + fileName);
+            writer.write(drones, new FileWriter(new File("output_" + fileName)));
         }
 
     }
