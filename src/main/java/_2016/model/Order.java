@@ -6,19 +6,12 @@ public class Order {
 
     public final int index;
     public final Position destination;
-    public final List<OrderItem> expecteditems;
-    public Integer completedTurn;
+    public final List<OrderItem> expectedItems;
 
-    public Order(int index, Position destination, List<OrderItem> expecteditems) {
+    public Order(int index, Position destination, List<OrderItem> expectedItems) {
         this.index = index;
         this.destination = destination;
-        this.expecteditems = expecteditems;
-    }
-
-    public long countByType(int type) {
-        return expecteditems.stream()
-                .filter(item -> item.type == type)
-                .count();
+        this.expectedItems = expectedItems;
     }
 
     @Override
@@ -26,7 +19,7 @@ public class Order {
         return "Order{" +
                 "index=" + index +
                 ", destination=" + destination +
-                ", expecteditems=" + expecteditems +
+                ", expectedItems=" + expectedItems +
                 '}';
     }
 }

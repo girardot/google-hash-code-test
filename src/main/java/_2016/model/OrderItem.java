@@ -22,12 +22,8 @@ public class OrderItem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         OrderItem item = (OrderItem) o;
-
-        if (type != item.type) return false;
-        return count == item.count;
-
+        return type == item.type && count == item.count;
     }
 
     @Override

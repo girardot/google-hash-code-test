@@ -41,9 +41,9 @@ public class InputReaderTest {
 
         Order firstOrder = world.orders.get(0);
         assertThat(firstOrder.destination).isEqualTo(new Position(1, 1));
-        assertThat(firstOrder.expecteditems).hasSize(2);
-        assertThat(firstOrder.expecteditems.get(0)).isEqualTo(new OrderItem(2, 1));
-        assertThat(firstOrder.expecteditems.get(1)).isEqualTo(new OrderItem(0, 1));
+        assertThat(firstOrder.expectedItems).hasSize(2);
+        assertThat(firstOrder.expectedItems.get(0)).isEqualTo(new OrderItem(2, 1));
+        assertThat(firstOrder.expectedItems.get(1)).isEqualTo(new OrderItem(0, 1));
 
     }
 

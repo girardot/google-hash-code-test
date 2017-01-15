@@ -28,13 +28,13 @@ public class WriterTest {
         Warehouse w1 = new Warehouse(0, new Position(3, 4), newArrayList(item));
         Warehouse w2 = new Warehouse(0, new Position(3, 4), newArrayList(item));
 
-        Drone drone0 = new Drone(0, 25, w1.position);
+        Drone drone0 = new Drone(0);
         drone0.load(0, 3, w1);
         drone0.deliver(1, 3, order);
         drone0.load(1, 3, w2);
         drone0.load(3, 5, w1);
 
-        Drone drone1 = new Drone(1, 10, w1.position);
+        Drone drone1 = new Drone(1);
         drone1.load(0, 2, w1);
         drone1.load(2, 1, w1);
         drone1.load(3, 5, w1);

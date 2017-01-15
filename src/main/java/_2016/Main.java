@@ -2,8 +2,6 @@ package _2016;
 
 import _2016.input.InputReader;
 import _2016.model.Drone;
-import _2016.model.Instruction;
-import _2016.model.InstructionType;
 import _2016.model.World;
 import _2016.output.Writer;
 import _2016.process.SimpleProcessor;
@@ -11,7 +9,6 @@ import _2016.process.SimpleProcessor;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static _2016.score.ScoreProcessor.computeScore;
@@ -21,44 +18,19 @@ public class Main {
     public static void main(String[] args) throws IOException {
         InputReader inputReader = new InputReader();
         String[] fileNames = {"busy_day.in", "redundancy.in", "mother_of_all_warehouses.in"};
+
+
         for (String fileName : fileNames) {
+            System.out.println("File " + fileName + " loading");
             World world = inputReader.parse("/" + fileName);
-            System.out.println(world);
 
+            System.out.println("World Processing");
             SimpleProcessor simpleProcessor = new SimpleProcessor();
-
             List<Drone> drones = simpleProcessor.process(world);
 
-            int weight = 0;
-
-            for (Drone drone : drones) {
-                ArrayList<Instruction> instructions = new ArrayList<>();
-                ArrayList<Instruction> delivers = new ArrayList<>();
-
-                for (Instruction instruction : drone.instructions) {
-                    if (instruction.instructionType == InstructionType.LOAD) {
-                        int tmpWeight = weight + world.productTypeWeigh.get(instruction.productType);
-
-                        if (tmpWeight < world.maxPayLoad) {
-                            instructions.add(instruction);
-                            weight = tmpWeight;
-                        } else {
-                            instructions.addAll(delivers);
-                            weight = 0;
-                            delivers.clear();
-                            instructions.add(instruction);
-                        }
-
-                    } else {
-                        delivers.add(instruction);
-                    }
-                }
-                drone.instructions.clear();
-                drone.instructions.addAll(instructions);
-            }
-
-
             System.out.println("Score => " + computeScore(world, drones));
+
+            System.out.println("Result writing");
             Writer writer = new Writer();
             writer.write(drones, new FileWriter(new File("output_" + fileName)));
         }

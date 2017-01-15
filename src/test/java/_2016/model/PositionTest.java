@@ -10,17 +10,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PositionTest {
 
     @Test
-    public void should_compare_by_distance() {
-        Position position1 = new Position(0, 0);
-        List<Position> positions = new ArrayList<>();
-        positions.add(new Position(15, 15));
-        positions.add(new Position(3, 3));
-        positions.add(new Position(10, 10));
+    public void should_sort_positions_from_the_nearest_to_the_farthest_distance() {
+        // Given
+        Position initialPosition = new Position(0, 0);
+        List<Position> positionsToOrder = new ArrayList<>();
+        positionsToOrder.add(new Position(15, 15));
+        positionsToOrder.add(new Position(3, 3));
+        positionsToOrder.add(new Position(10, 10));
 
+        // When
+        positionsToOrder.sort(initialPosition.nearestPositionComparator());
 
-        positions.sort(position1.nearPositionComparator());
-
-
-        assertThat(positions).containsExactly(new Position(3, 3), new Position(10, 10), new Position(15, 15));
+        // Then
+        assertThat(positionsToOrder).containsExactly(
+                new Position(3, 3),
+                new Position(10, 10),
+                new Position(15, 15)
+        );
     }
 }

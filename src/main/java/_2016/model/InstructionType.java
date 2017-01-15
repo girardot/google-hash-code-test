@@ -4,13 +4,13 @@ public enum InstructionType {
 
     LOAD('L'), DELIVER('D');
 
-    private char l;
+    private char letter;
 
-    InstructionType(char l) {
-        this.l = l;
+    InstructionType(char letter) {
+        this.letter = letter;
     }
 
-    public char getL() {
-        return l;
+    public char getLetter() {
+        return letter;
     }
 }

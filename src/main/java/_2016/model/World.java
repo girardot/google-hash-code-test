@@ -37,12 +37,4 @@ public class World {
                 '}';
     }
 
-    public Warehouse nextWarehouse(int type, Position dronePosition) {
-
-        return warehouses.stream()
-                .filter(warehouse -> warehouse.containsItemsWithType(type))
-                .sorted(Comparator.comparing(warehouse -> warehouse.position, dronePosition.nearPositionComparator()))
-                .findFirst().orElse(null);
-
-    }
 }

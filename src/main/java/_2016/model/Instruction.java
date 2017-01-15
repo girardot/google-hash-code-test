@@ -25,15 +25,13 @@ public class Instruction {
 
     public void write(int drone, Writer writer) throws IOException {
         switch (instructionType) {
-
             case LOAD:
-                writer.write(drone + " " + instructionType.getL() + " " + wareHouse + " " + productType + " " + productNumber + "\n");
+                writer.write(drone + " " + instructionType.getLetter() + " " + wareHouse + " " + productType + " " + productNumber + "\n");
                 break;
             case DELIVER:
-                writer.write(drone + " " + instructionType.getL() + " " + customer + " " + productType + " " + productNumber + "\n");
+                writer.write(drone + " " + instructionType.getLetter() + " " + customer + " " + productType + " " + productNumber + "\n");
                 break;
         }
-
     }
 
 }
