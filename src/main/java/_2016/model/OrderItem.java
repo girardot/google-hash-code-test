@@ -5,6 +5,9 @@ public class OrderItem {
     public final int type;
     public final int count;
 
+    // TODO refactor
+    public boolean isDone = false;
+
     public OrderItem(int type, int count) {
         this.type = type;
         this.count = count;

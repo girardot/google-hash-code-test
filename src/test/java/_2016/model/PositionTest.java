@@ -28,4 +28,70 @@ public class PositionTest {
                 new Position(15, 15)
         );
     }
+
+    @Test
+    public void should_not_move() {
+        // Given
+        Position startPosition = new Position(1, 1);
+        Position destination = new Position(1, 1);
+
+        // When
+        Position newPosition = startPosition.moveToDestination(destination);
+
+        // Then
+        assertThat(newPosition).isEqualTo(startPosition);
+    }
+
+    @Test
+    public void should_move_right() {
+        // Given
+        Position startPosition = new Position(1, 1);
+        Position destination = new Position(6, 1);
+
+        // When
+        Position newPosition = startPosition.moveToDestination(destination);
+
+        // Then
+        assertThat(newPosition).isEqualTo(new Position(2, 1));
+    }
+
+    @Test
+    public void should_move_left() {
+        // Given
+        Position startPosition = new Position(6, 1);
+        Position destination = new Position(1, 1);
+
+        // When
+        Position newPosition = startPosition.moveToDestination(destination);
+
+        // Then
+        assertThat(newPosition).isEqualTo(new Position(5, 1));
+    }
+
+    @Test
+    public void should_move_up() {
+        // Given
+        Position startPosition = new Position(5, 4);
+        Position destination = new Position(5, 1);
+
+        // When
+        Position newPosition = startPosition.moveToDestination(destination);
+
+        // Then
+        assertThat(newPosition).isEqualTo(new Position(5, 3));
+    }
+
+    @Test
+    public void should_move_down() {
+        // Given
+        Position startPosition = new Position(5, 1);
+        Position destination = new Position(5, 4);
+
+        // When
+        Position newPosition = startPosition.moveToDestination(destination);
+
+        // Then
+        assertThat(newPosition).isEqualTo(new Position(5, 2));
+    }
+
 }

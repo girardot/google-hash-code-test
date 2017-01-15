@@ -49,4 +49,17 @@ public class Instruction {
         }
     }
 
+    @Override
+    public String toString() {
+        String result = "";
+        switch (instructionType) {
+            case LOAD:
+                result = instructionType + " from warehouse : " + wareHouse.index + ", " + productNumber + "  product(s) of type: " + productType;
+                break;
+            case DELIVER:
+                result = (instructionType + " order : " + order.index + ", " + productNumber + "  product(s) of type : " + productType);
+                break;
+        }
+        return result;
+    }
 }

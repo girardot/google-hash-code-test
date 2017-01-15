@@ -46,7 +46,24 @@ public class Position {
         };
     }
 
-    private int distance(Position position) {
+    public int distance(Position position) {
         return (int) ceil(sqrt(pow(position.x - this.x, 2) + pow(position.y - this.y, 2)));
+    }
+
+
+    public Position moveToDestination(Position destination) {
+        if (this.equals(destination)) {
+            return this;
+        }
+
+        int newX = x;
+        int newY = y;
+        if (destination.x != x) {
+            newX += (destination.x - x) / abs((destination.x - x));
+        } else if (destination.y != y) {
+            newY += (destination.y - y) / abs((destination.y - y));
+        }
+
+        return new Position(newX, newY);
     }
 }
