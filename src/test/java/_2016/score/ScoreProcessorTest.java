@@ -33,7 +33,7 @@ public class ScoreProcessorTest {
 
         drone.instructions.add(buildLoadInstruction(world.warehouses.get(0), 0, 1));
         drone.instructions.add(buildLoadInstruction(world.warehouses.get(0), 1, 1));
-        drone.instructions.add(buildDeliverInstruction(world.orders.get(0), 1, 1));
+        drone.instructions.add(buildDeliverInstruction(world.orders.get(0), 0, 1));
         drone.instructions.add(buildLoadInstruction(world.warehouses.get(1), 2, 1));
         drone.instructions.add(buildDeliverInstruction(world.orders.get(0), 2, 1));
 

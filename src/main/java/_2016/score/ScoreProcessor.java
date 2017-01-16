@@ -12,53 +12,25 @@ public class ScoreProcessor {
 
     public int computeScore(World world, List<Drone> drones) {
         int score = 0;
-        Position firstDronePosition = new Position(2, 2);
-        Drone firstDrone = drones.get(0);
-        List<Instruction> instructions = firstDrone.instructions;
-        Iterator<Instruction> instructionIterator = instructions.iterator();
+        ScoreDrone drone = new ScoreDrone(drones.get(0).instructions);
 
-        Instruction droneInstruction = instructionIterator.next();
-        System.out.println("Drone instruction is : " + droneInstruction);
+        System.out.println("Drone instruction is : " + drone.currentInstruction);
 
         for (int turn = 0; turn < world.turns; turn++) {
             System.out.println("***************** Turn : " + turn + " *****************");
+            Position instructionDestination = getDestinationFrom(drone.getCurrentInstruction());
 
-            if (LOAD.equals(droneInstruction.instructionType)) {
-                final Position destination = droneInstruction.wareHouse.position;
-
-                int distanceToWarehouse = firstDronePosition.distance(destination);
-                if (distanceToWarehouse != 0) {
-                    System.out.print("Drone " + firstDronePosition + " is moving to warehouse" + destination);
-                    firstDronePosition = firstDronePosition.moveToDestination(destination);
-                    System.out.println(" -----> new drone position is  " + firstDronePosition);
-
-                } else {
-                    System.out.println("Drone is loading");
-                    if (instructionIterator.hasNext()) {
-                        droneInstruction = instructionIterator.next();
-                        System.out.println("Drone instruction is : " + droneInstruction);
-                    }
-                }
-
-            } else if (DELIVER.equals(droneInstruction.instructionType)) {
-                final Position destination = droneInstruction.order.destination;
-
-                int distanceToClient = firstDronePosition.distance(destination);
-                if (distanceToClient != 0) {
-                    System.out.print("Drone " + firstDronePosition + " is moving to client" + destination);
-                    firstDronePosition = firstDronePosition.moveToDestination(destination);
-                    System.out.println(" -----> new drone position is  " + firstDronePosition);
-                } else {
-                    System.out.println("Drone is deliver");
-                    if (instructionIterator.hasNext()) {
-                        droneInstruction = instructionIterator.next();
-                        System.out.println("Drone instruction is : " + droneInstruction);
-                    }
+            boolean hasMove = drone.moveTo(instructionDestination, drone.getCurrentInstruction().instructionType);
+            if (!hasMove) {
+                if (LOAD.equals(drone.getCurrentInstruction().instructionType)) {
+                    drone.load(drone.getCurrentInstruction());
+                } else if (DELIVER.equals(drone.getCurrentInstruction().instructionType)) {
+                    drone.deliver(drone.getCurrentInstruction());
 
                     for (Order order : world.orders) {
-                        if (order.equals(droneInstruction.order)) {
+                        if (order.equals(drone.getCurrentInstruction().order)) {
                             for (OrderItem item : order.expectedItems) {
-                                if (item.type == droneInstruction.productType) {
+                                if (item.type == drone.getCurrentInstruction().productType) {
                                     item.isDone = true;
                                 }
                             }
@@ -68,11 +40,68 @@ public class ScoreProcessor {
                         }
                     }
                 }
-
+                Instruction nextInstruction = drone.getNextInstruction();
+                if (nextInstruction == null) {
+                    break;
+                }
+                System.out.println("Drone new instruction is : " + nextInstruction);
             }
         }
 
         return score;
+    }
+
+    private Position getDestinationFrom(Instruction instruction) {
+        Position destination = null;
+        if (LOAD.equals(instruction.instructionType)) {
+            destination = instruction.wareHouse.position;
+        } else if (DELIVER.equals(instruction.instructionType)) {
+            destination = instruction.order.destination;
+        }
+        return destination;
+    }
+
+    private class ScoreDrone {
+        private Position position = new Position(0, 0);
+        private final Iterator<Instruction> instructionIterator;
+        private Instruction currentInstruction;
+
+        private ScoreDrone(List<Instruction> instructions) {
+            instructionIterator = instructions.iterator();
+            getNextInstruction();
+        }
+
+        public Instruction getNextInstruction() {
+            currentInstruction = null;
+            if (instructionIterator.hasNext()) {
+                currentInstruction = instructionIterator.next();
+            }
+            return currentInstruction;
+        }
+
+        public Instruction getCurrentInstruction() {
+            return currentInstruction;
+        }
+
+        private boolean moveTo(Position destination, InstructionType instructionType) {
+            int distanceToDestination = position.distance(destination);
+            boolean hasMove = false;
+            if (distanceToDestination != 0) {
+                System.out.print("Drone " + position + " is moving to " + (LOAD.equals(instructionType) ? "warehouse" : "client") + destination);
+                position = position.moveToDestination(destination);
+                System.out.println(" -----> new drone position is  " + position);
+                hasMove = true;
+            }
+            return hasMove;
+        }
+
+        public void load(Instruction instruction) {
+            System.out.println("Drone is loading item " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
+        }
+
+        public void deliver(Instruction instruction) {
+            System.out.println("Drone is deliver item " + instruction.productType + " to order " + instruction.order.index);
+        }
     }
 
 }
