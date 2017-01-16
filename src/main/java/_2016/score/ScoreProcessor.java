@@ -13,7 +13,7 @@ public class ScoreProcessor {
     public int computeScore(World world, List<Drone> drones) {
         int score = 0;
         final List<ScoreDrone> scoreDrones = drones.stream()
-                .map(d -> new ScoreDrone(d.index, d.instructions, world.maxPayLoad))
+                .map(d -> new ScoreDrone(d.index, d.instructions, world.maxPayLoad, world.productTypeWeigh))
                 .collect(Collectors.toList());
 
         for (int turn = 0; turn < world.turns; turn++) {
