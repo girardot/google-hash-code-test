@@ -25,7 +25,7 @@ public class ScoreProcessorTest {
     }
 
     @Test
-    public void should_compute_score() {
+    public void should_compute_score_for_one_drone() {
         // Given
         Drone drone = new Drone(0);
 
@@ -40,6 +40,30 @@ public class ScoreProcessorTest {
 
         // Then
         assertThat(score).isEqualTo(64);
+    }
+
+    @Test
+    public void should_compute_score_for_two_drones() {
+        // Given
+        Drone drone1 = new Drone(0);
+
+        drone1.instructions.add(buildLoadInstruction(world.warehouses.get(0), 0, 1));
+        drone1.instructions.add(buildLoadInstruction(world.warehouses.get(0), 1, 1));
+        drone1.instructions.add(buildDeliverInstruction(world.orders.get(0), 0, 1));
+        drone1.instructions.add(buildLoadInstruction(world.warehouses.get(1), 2, 1));
+        drone1.instructions.add(buildDeliverInstruction(world.orders.get(0), 2, 1));
+
+        Drone drone2 = new Drone(1);
+        drone2.instructions.add(buildLoadInstruction(world.warehouses.get(1), 2, 1));
+        drone2.instructions.add(buildDeliverInstruction(world.orders.get(2), 2, 1));
+        drone2.instructions.add(buildLoadInstruction(world.warehouses.get(0), 0, 1));
+        drone2.instructions.add(buildDeliverInstruction(world.orders.get(1), 0, 1));
+
+        // When
+        int score = scoreProcessor.computeScore(world, newArrayList(drone1, drone2));
+
+        // Then
+        assertThat(score).isEqualTo(194);
     }
 
 }
