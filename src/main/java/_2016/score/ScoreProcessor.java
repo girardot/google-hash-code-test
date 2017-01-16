@@ -2,7 +2,6 @@ package _2016.score;
 
 import _2016.model.*;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,7 @@ public class ScoreProcessor {
     public int computeScore(World world, List<Drone> drones) {
         int score = 0;
         final List<ScoreDrone> scoreDrones = drones.stream()
-                .map(d -> new ScoreDrone(d.index, d.instructions))
+                .map(d -> new ScoreDrone(d.index, d.instructions, world.maxPayLoad))
                 .collect(Collectors.toList());
 
         for (int turn = 0; turn < world.turns; turn++) {
@@ -23,10 +22,10 @@ public class ScoreProcessor {
             for (ScoreDrone drone : scoreDrones) {
                 System.out.println("xxxxxxxxxxxxxxxxxxxx Drone: " + drone.index + " xxxxxxxxxxxxxxxxxxxx");
 
-                if (drone.currentInstruction == null) {
+                if (drone.getCurrentInstruction() == null) {
                     System.out.println("Drone(" + drone.index + ") do not have instruction");
                 } else {
-                    System.out.println("Drone(" + drone.index + ") instruction is : " + drone.currentInstruction);
+                    System.out.println("Drone(" + drone.index + ") instruction is : " + drone.getCurrentInstruction());
                     Position instructionDestination = drone.getCurrentInstruction().getDestination();
 
                     boolean hasMove = drone.moveTo(instructionDestination, drone.getCurrentInstruction().instructionType);
@@ -56,51 +55,6 @@ public class ScoreProcessor {
         }
 
         return score;
-    }
-
-    private class ScoreDrone {
-        private Position position = new Position(0, 0);
-        private final Iterator<Instruction> instructionIterator;
-        private Instruction currentInstruction;
-        private final int index;
-
-        private ScoreDrone(int index, List<Instruction> instructions) {
-            this.index = index;
-            instructionIterator = instructions.iterator();
-            getNextInstruction();
-        }
-
-        public Instruction getNextInstruction() {
-            currentInstruction = null;
-            if (instructionIterator.hasNext()) {
-                currentInstruction = instructionIterator.next();
-            }
-            return currentInstruction;
-        }
-
-        public Instruction getCurrentInstruction() {
-            return currentInstruction;
-        }
-
-        private boolean moveTo(Position destination, InstructionType instructionType) {
-            int distanceToDestination = position.distance(destination);
-            boolean hasMove = false;
-            if (distanceToDestination != 0) {
-                System.out.print("Drone(" + index + ") " + position + " is moving to " + (LOAD.equals(instructionType) ? "warehouse" : "client") + destination);
-                position = position.moveToDestination(destination);
-                System.out.println(" -----> new drone(" + index + ") position is  " + position);
-                hasMove = true;
-            }
-            return hasMove;
-        }
-
-        public void load(Instruction instruction) {
-            System.out.println("Drone(" + index + ") is loading item " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
-        }
-
-        public void deliver(Instruction instruction) {
-            System.out.println("Drone(" + index + ") is deliver item " + instruction.productType + " to order " + instruction.order.index);
-        }
     }
 
 }
