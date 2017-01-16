@@ -5,7 +5,6 @@ import _2016.input.InputReader;
 import _2016.model.Drone;
 import _2016.model.World;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static _2016.model.Instruction.buildDeliverInstruction;
@@ -25,7 +24,6 @@ public class ScoreProcessorTest {
         world = inputReader.parse(fileName);
     }
 
-    @Ignore
     @Test
     public void should_compute_score() {
         // Given

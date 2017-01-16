@@ -62,4 +62,14 @@ public class Instruction {
         }
         return result;
     }
+
+    public Position getDestination() {
+        Position destination = null;
+        if (LOAD.equals(instructionType)) {
+            destination = wareHouse.position;
+        } else if (DELIVER.equals(instructionType)) {
+            destination = order.destination;
+        }
+        return destination;
+    }
 }

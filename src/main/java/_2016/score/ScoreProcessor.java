@@ -15,13 +15,13 @@ public class ScoreProcessor {
         int score = 0;
 
         ScoreDrone drone = new ScoreDrone(drones.get(0).index, drones.get(0).instructions);
-        //List<ScoreDrone> scoreDrones = drones.stream().map(d -> new ScoreDrone(d.index, d.instructions)).collect(Collectors.toList());
+        List<ScoreDrone> scoreDrones = drones.stream().map(d -> new ScoreDrone(d.index, d.instructions)).collect(Collectors.toList());
 
         System.out.println("Drone(" + drone.index + ") instruction is : " + drone.currentInstruction);
 
         for (int turn = 0; turn < world.turns; turn++) {
             System.out.println("***************** Turn : " + turn + " *****************");
-            Position instructionDestination = getDestinationFrom(drone.getCurrentInstruction());
+            Position instructionDestination = drone.getCurrentInstruction().getDestination();
 
             boolean hasMove = drone.moveTo(instructionDestination, drone.getCurrentInstruction().instructionType);
             if (!hasMove) {
@@ -51,16 +51,6 @@ public class ScoreProcessor {
         }
 
         return score;
-    }
-
-    private Position getDestinationFrom(Instruction instruction) {
-        Position destination = null;
-        if (LOAD.equals(instruction.instructionType)) {
-            destination = instruction.wareHouse.position;
-        } else if (DELIVER.equals(instruction.instructionType)) {
-            destination = instruction.order.destination;
-        }
-        return destination;
     }
 
     private class ScoreDrone {

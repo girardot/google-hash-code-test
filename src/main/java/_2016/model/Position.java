@@ -7,10 +7,10 @@ import static java.lang.Math.*;
 
 public class Position {
 
-    public final int x;
-    public final int y;
+    public final double x;
+    public final double y;
 
-    public Position(int x, int y) {
+    public Position(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -55,13 +55,16 @@ public class Position {
         if (this.equals(destination)) {
             return this;
         }
+        int distance = this.distance(destination);
 
-        int newX = x;
-        int newY = y;
+        double newX = x;
+        double newY = y;
+
         if (destination.x != x) {
-            newX += (destination.x - x) / abs((destination.x - x));
-        } else if (destination.y != y) {
-            newY += (destination.y - y) / abs((destination.y - y));
+            newX += (destination.x - x) / distance;
+        }
+        if (destination.y != y) {
+            newY += (destination.y - y) / distance;
         }
 
         return new Position(newX, newY);
