@@ -3,6 +3,7 @@ package _2016.score;
 
 import _2016.model.Position;
 import _2016.model.Warehouse;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -53,5 +54,11 @@ public class ScoreDroneTest {
         //Then
         assertThat(scoreDrone.getItemsCarried()).hasSize(1);
         assertThat(scoreDrone.getItemsCarried().get(2)).isNull();
+    }
+
+    @Ignore
+    @Test
+    public void should_deliver_only_loaded_items() {
+        //TODO
     }
 }
