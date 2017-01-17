@@ -12,7 +12,7 @@ import static _2016.model.Instruction.buildLoadInstruction;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ScoreProcessorTest {
+public class ScoreProcessorIntegrationTest {
 
     private final ScoreProcessor scoreProcessor = new ScoreProcessor();
     private World world;
@@ -20,8 +20,7 @@ public class ScoreProcessorTest {
     @Before
     public void setUp() throws Exception {
         InputReader inputReader = new InputReader();
-        String fileName = "/simple.in";
-        world = inputReader.parse(fileName);
+        world = inputReader.parse("/simple.in");
     }
 
     @Test
@@ -36,7 +35,7 @@ public class ScoreProcessorTest {
         drone.instructions.add(buildDeliverInstruction(world.orders.get(0), 2, 1));
 
         // When
-        int score = scoreProcessor.computeScore(world, newArrayList(drone));
+        int score = scoreProcessor.computeScore(world, newArrayList(drone), world.warehouses);
 
         // Then
         assertThat(score).isEqualTo(64);
@@ -60,7 +59,7 @@ public class ScoreProcessorTest {
         drone2.instructions.add(buildDeliverInstruction(world.orders.get(1), 0, 1));
 
         // When
-        int score = scoreProcessor.computeScore(world, newArrayList(drone1, drone2));
+        int score = scoreProcessor.computeScore(world, newArrayList(drone1, drone2), world.warehouses);
 
         // Then
         assertThat(score).isEqualTo(194);

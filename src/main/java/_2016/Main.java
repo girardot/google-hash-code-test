@@ -2,6 +2,7 @@ package _2016;
 
 import _2016.input.InputReader;
 import _2016.model.Drone;
+import _2016.model.Warehouse;
 import _2016.model.World;
 import _2016.output.Writer;
 import _2016.process.SimpleProcessor;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -29,9 +32,13 @@ public class Main {
 
             LOGGER.info("World Processing");
             SimpleProcessor simpleProcessor = new SimpleProcessor();
+
+            List<Warehouse> startWarehouses = new ArrayList<>();
+            Collections.copy(world.warehouses, startWarehouses);
+
             List<Drone> drones = simpleProcessor.process(world);
 
-            LOGGER.info("Score => " + scoreProcessor.computeScore(world, drones));
+            LOGGER.info("Score => " + scoreProcessor.computeScore(world, drones, startWarehouses));
 
             LOGGER.info("Result writing");
             Writer writer = new Writer();

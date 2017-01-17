@@ -31,11 +31,11 @@ public class InputReaderTest {
         assertThat(world.warehouses).hasSize(2);
         Warehouse firstWarehouse = world.warehouses.get(0);
         assertThat(firstWarehouse.position).isEqualTo(new Position(0, 0));
-        assertThat(firstWarehouse.items).containsOnly(new Item(0, 5), new Item(1, 1));
+        assertThat(firstWarehouse.getItems()).containsOnly(new Item(0, 5), new Item(1, 1));
 
         Warehouse secondWarehouse = world.warehouses.get(1);
         assertThat(secondWarehouse.position).isEqualTo(new Position(5, 5));
-        assertThat(secondWarehouse.items).containsOnly(new Item(1, 10), new Item(2, 2));
+        assertThat(secondWarehouse.getItems()).containsOnly(new Item(1, 10), new Item(2, 2));
 
         assertThat(world.orders).hasSize(3);
 

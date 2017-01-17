@@ -13,10 +13,10 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class ScoreProcessor {
     public final Logger LOGGER = getLogger(ScoreProcessor.class);
 
-    public int computeScore(World world, List<Drone> drones) {
+    public int computeScore(World world, List<Drone> drones, List<Warehouse> warehousesAtBeginning) {
         int score = 0;
         final List<ScoreDrone> scoreDrones = drones.stream()
-                .map(d -> new ScoreDrone(d.index, d.instructions, world.maxPayLoad, world.productTypeWeigh))
+                .map(d -> new ScoreDrone(d.index, d.instructions, world.maxPayLoad, world.productTypeWeigh, warehousesAtBeginning))
                 .collect(Collectors.toList());
 
         for (int turn = 0; turn < world.turns; turn++) {

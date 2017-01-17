@@ -1,8 +1,6 @@
 package _2016.score;
 
-import _2016.model.Instruction;
-import _2016.model.InstructionType;
-import _2016.model.Position;
+import _2016.model.*;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
@@ -23,12 +21,18 @@ public class ScoreDrone {
 
     public final int maxPayLoad;
     private final List<Integer> productWeights;
+    private final List<Warehouse> warehousesAtBeginning;
     public final int index;
 
-    public ScoreDrone(int index, List<Instruction> instructions, int maxPayLoad, List<Integer> productWeights) {
+    public ScoreDrone(int index,
+                      List<Instruction> instructions,
+                      int maxPayLoad,
+                      List<Integer> productWeights,
+                      List<Warehouse> warehousesAtBeginning) {
         this.index = index;
         this.maxPayLoad = maxPayLoad;
         this.productWeights = productWeights;
+        this.warehousesAtBeginning = warehousesAtBeginning;
         if (instructions != null) {
             this.instructionIterator = instructions.iterator();
         }
@@ -65,8 +69,22 @@ public class ScoreDrone {
 
     public void load(Instruction instruction) {
         if (canLoadItems(instruction.productType, instruction.productNumber)) {
-            loadProduct(instruction.productType, instruction.productNumber);
-            LOGGER.debug("Drone(" + index + ") is loading " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
+            final Warehouse warehouse = warehousesAtBeginning.stream()
+                    .filter(w -> (w.index == instruction.wareHouse.index)).findFirst()
+                    .orElseGet(null);
+            final Item itemInWarehouse = warehouse.getItems().stream()
+                    .filter(item -> item.type == instruction.productType).findFirst().orElse(null);
+            final int numberAvailable = itemInWarehouse.count;
+
+            if (numberAvailable >= instruction.productNumber) {
+                warehouse.getItems().remove(itemInWarehouse);
+                warehouse.getItems().add(new Item(instruction.productType, numberAvailable - instruction.productNumber));
+                loadProduct(instruction.productType, instruction.productNumber);
+                LOGGER.debug("Drone(" + index + ") is loading " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
+            } else {
+                LOGGER.debug("WARNING !!!!!!! Product Not Available in warehouse !!!!!!!!!!!!");
+                LOGGER.debug("WARNING !!!!!!! Drone(" + index + ") cannot load " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
+            }
         } else {
             LOGGER.debug("WARNING !!!!!!! Max payload reached !!!!!!!!!!!!");
             LOGGER.debug("WARNING !!!!!!! Drone(" + index + ") cannot load " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
