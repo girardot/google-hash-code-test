@@ -3,6 +3,7 @@ package _2016.score;
 import _2016.model.Instruction;
 import _2016.model.InstructionType;
 import _2016.model.Position;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,8 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 import static _2016.model.InstructionType.LOAD;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class ScoreDrone {
+    public final Logger LOGGER = getLogger(ScoreDrone.class);
 
     private Iterator<Instruction> instructionIterator;
     private Instruction currentInstruction;
@@ -52,9 +55,9 @@ public class ScoreDrone {
         int distanceToDestination = position.distance(destination);
         boolean hasMove = false;
         if (distanceToDestination != 0) {
-            System.out.print("Drone(" + index + ") " + position + " is moving to " + (LOAD.equals(instructionType) ? "warehouse" : "client") + destination);
+            LOGGER.debug("Drone(" + index + ") " + position + " is moving to " + (LOAD.equals(instructionType) ? "warehouse" : "client") + destination);
             position = position.moveToDestination(destination);
-            System.out.println(" -----> new drone(" + index + ") position is  " + position);
+            LOGGER.debug(" -----> new drone(" + index + ") position is  " + position);
             hasMove = true;
         }
         return hasMove;
@@ -63,20 +66,20 @@ public class ScoreDrone {
     public void load(Instruction instruction) {
         if (canLoadItems(instruction.productType, instruction.productNumber)) {
             loadProduct(instruction.productType, instruction.productNumber);
-            System.out.println("Drone(" + index + ") is loading " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
+            LOGGER.debug("Drone(" + index + ") is loading " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
         } else {
-            System.out.println("WARNING !!!!!!! Max payload reached !!!!!!!!!!!!");
-            System.out.println("WARNING !!!!!!! Drone(" + index + ") cannot load " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
+            LOGGER.debug("WARNING !!!!!!! Max payload reached !!!!!!!!!!!!");
+            LOGGER.debug("WARNING !!!!!!! Drone(" + index + ") cannot load " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
         }
     }
 
     public void deliver(Instruction instruction) {
         if (hasProducts(instruction.productType, instruction.productNumber)) {
             unloadProduct(instruction.productType, instruction.productNumber);
-            System.out.println("Drone(" + index + ") is deliver item " + instruction.productType + " to order " + instruction.order.index);
+            LOGGER.debug("Drone(" + index + ") is deliver item " + instruction.productType + " to order " + instruction.order.index);
         } else {
-            System.out.println("WARNING !!!!!!! Deliver failed !!!!!!!!!!!!");
-            System.out.println("WARNING !!!!!!! Drone(" + index + ") does not has " + instruction.productNumber + " " + instruction.productType);
+            LOGGER.debug("WARNING !!!!!!! Deliver failed !!!!!!!!!!!!");
+            LOGGER.debug("WARNING !!!!!!! Drone(" + index + ") does not has " + instruction.productNumber + " " + instruction.productType);
         }
     }
 
