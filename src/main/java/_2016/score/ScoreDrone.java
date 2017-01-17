@@ -61,16 +61,42 @@ public class ScoreDrone {
     }
 
     public void load(Instruction instruction) {
-        if (instruction.productNumber * productWeights.get(instruction.productType) + itemsCarriedWeight() < maxPayLoad) {
-            itemsCarried.put(
-                    instruction.productType,
-                    itemsCarried.getOrDefault(instruction.productType, 0) + instruction.productNumber
-            );
+        if (canLoadItems(instruction.productType, instruction.productNumber)) {
+            loadProduct(instruction.productType, instruction.productNumber);
             System.out.println("Drone(" + index + ") is loading " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
         } else {
             System.out.println("WARNING !!!!!!! Max payload reached !!!!!!!!!!!!");
             System.out.println("WARNING !!!!!!! Drone(" + index + ") cannot load " + instruction.productNumber + " item(s) " + instruction.productType + " from warehouse " + instruction.wareHouse.index);
         }
+    }
+
+    public void deliver(Instruction instruction) {
+        if (hasProducts(instruction.productType, instruction.productNumber)) {
+            unloadProduct(instruction.productType, instruction.productNumber);
+            System.out.println("Drone(" + index + ") is deliver item " + instruction.productType + " to order " + instruction.order.index);
+        } else {
+            System.out.println("WARNING !!!!!!! Deliver failed !!!!!!!!!!!!");
+            System.out.println("WARNING !!!!!!! Drone(" + index + ") does not has " + instruction.productNumber + " " + instruction.productType);
+        }
+    }
+
+    private boolean hasProducts(int productType, int productNumber) {
+        return itemsCarried.getOrDefault(productType, 0) >= productNumber;
+    }
+
+    private void loadProduct(int productType, int numberToLoad) {
+        itemsCarried.put(
+                productType,
+                itemsCarried.getOrDefault(productType, 0) + numberToLoad
+        );
+    }
+
+    private void unloadProduct(int productType, int numberToUnload) {
+        loadProduct(productType, (-1 * numberToUnload));
+    }
+
+    private boolean canLoadItems(int productType, int productNumber) {
+        return productNumber * productWeights.get(productType) + itemsCarriedWeight() < maxPayLoad;
     }
 
     private int itemsCarriedWeight() {
@@ -79,9 +105,5 @@ public class ScoreDrone {
             totalCarriedWeight = productWeights.get(entry.getKey()) * entry.getValue();
         }
         return totalCarriedWeight;
-    }
-
-    public void deliver(Instruction instruction) {
-        System.out.println("Drone(" + index + ") is deliver item " + instruction.productType + " to order " + instruction.order.index);
     }
 }
