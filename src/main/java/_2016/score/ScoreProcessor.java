@@ -3,7 +3,9 @@ package _2016.score;
 import _2016.model.*;
 import org.slf4j.Logger;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static _2016.model.InstructionType.DELIVER;
@@ -15,6 +17,7 @@ public class ScoreProcessor {
 
     public int computeScore(World world, List<Drone> drones, List<Warehouse> warehousesAtBeginning) {
         int score = 0;
+        final Set<OrderItem> itemsDone = new HashSet<>();
         final List<ScoreDrone> scoreDrones = drones.stream()
                 .map(d -> new ScoreDrone(d.index, d.instructions, world.maxPayLoad, world.productTypeWeigh, warehousesAtBeginning))
                 .collect(Collectors.toList());
@@ -43,9 +46,9 @@ public class ScoreProcessor {
                                 if (order.equals(drone.getCurrentInstruction().order)) {
                                     order.expectedItems.stream()
                                             .filter(item -> item.type == drone.getCurrentInstruction().productType)
-                                            .forEach(item -> item.isDone = true);
+                                            .forEach(itemsDone::add);
 
-                                    if (order.expectedItems.stream().allMatch(i -> i.isDone)) {
+                                    if (order.expectedItems.stream().allMatch(itemsDone::contains)) {
                                         score += 100 * (world.turns - turn) / world.turns;
                                     }
                                 }

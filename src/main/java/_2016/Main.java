@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -33,18 +32,23 @@ public class Main {
             LOGGER.info("World Processing");
             SimpleProcessor simpleProcessor = new SimpleProcessor();
 
-            List<Warehouse> startWarehouses = new ArrayList<>();
-            Collections.copy(world.warehouses, startWarehouses);
+            List<Warehouse> warehousesCloned = clone(world.warehouses);
 
             List<Drone> drones = simpleProcessor.process(world);
 
-            LOGGER.info("Score => " + scoreProcessor.computeScore(world, drones, startWarehouses));
+            LOGGER.info("Score => " + scoreProcessor.computeScore(world, drones, warehousesCloned));
 
             LOGGER.info("Result writing");
             Writer writer = new Writer();
             writer.write(drones, new FileWriter(new File("output_" + fileName)));
         }
 
+    }
+
+    private static List<Warehouse> clone(List<Warehouse> warehouses) {
+        List<Warehouse> listCloned = new ArrayList<>(warehouses.size());
+        warehouses.forEach(warehouse -> listCloned.add(new Warehouse(warehouse.index, warehouse.position, warehouse.getItems())));
+        return listCloned;
     }
 
 }

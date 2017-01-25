@@ -73,7 +73,7 @@ public class ScoreDrone {
                     .filter(w -> (w.index == instruction.wareHouse.index)).findFirst()
                     .orElseGet(null);
             final Item itemInWarehouse = warehouse.getItems().stream()
-                    .filter(item -> item.type == instruction.productType).findFirst().orElse(null);
+                    .filter(item -> item.type == instruction.productType).findFirst().orElse(new Item(-1, 0));
             final int numberAvailable = itemInWarehouse.count;
 
             if (numberAvailable >= instruction.productNumber) {
