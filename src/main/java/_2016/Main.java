@@ -23,7 +23,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ScoreProcessor scoreProcessor = new ScoreProcessor();
         InputReader inputReader = new InputReader();
-        String[] fileNames = {"busy_day.in", "redundancy.in", "mother_of_all_warehouses.in"};
+        // For training
+        String[] fileNames = {"simple.in"};
+//        String[] fileNames = {"busy_day.in", "redundancy.in", "mother_of_all_warehouses.in"};
 
         for (String fileName : fileNames) {
             LOGGER.info("File " + fileName + " loading");
