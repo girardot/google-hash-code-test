@@ -4,7 +4,6 @@ import _2016.model.*;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +12,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class ScoreDrone {
     public final Logger LOGGER = getLogger(ScoreDrone.class);
-
-    private Iterator<Instruction> instructionIterator;
-    private Instruction currentInstruction;
+    private final List<Instruction> instructions;
+    private int currentIntruction = 0;
     private Position position = new Position(0, 0);
     private Map<Integer, Integer> itemsCarried = new HashMap<>();
 
@@ -33,22 +31,23 @@ public class ScoreDrone {
         this.maxPayLoad = maxPayLoad;
         this.productWeights = productWeights;
         this.warehousesAtBeginning = warehousesAtBeginning;
-        if (instructions != null) {
-            this.instructionIterator = instructions.iterator();
-        }
-        getNextInstruction();
+        this.instructions = instructions;
     }
 
     public Instruction getNextInstruction() {
-        currentInstruction = null;
-        if (instructionIterator.hasNext()) {
-            currentInstruction = instructionIterator.next();
-        }
-        return currentInstruction;
+        currentIntruction++;
+        return getCurrentInstruction();
     }
 
     public Instruction getCurrentInstruction() {
-        return currentInstruction;
+        if (currentIntruction < instructions.size()) {
+            return instructions.get(currentIntruction);
+        }
+        return null;
+    }
+
+    public List<Instruction> getInstructions() {
+        return instructions;
     }
 
     public Map<Integer, Integer> getItemsCarried() {

@@ -1,0 +1,30 @@
+package _2016.score;
+
+import _2016.input.InputReader;
+import _2016.model.World;
+import org.slf4j.Logger;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
+import static org.slf4j.LoggerFactory.getLogger;
+
+public class MainScore {
+    public static final Logger LOGGER = getLogger(MainScore.class);
+
+    public static void main(String[] args) throws FileNotFoundException {
+        final InputReader inputReader = new InputReader();
+        final OutputFileReader outputFileReader = new OutputFileReader();
+        final ScoreProcessor scoreProcessor = new ScoreProcessor();
+        final String[] fileNames = {"simple.in"};
+//        String[] fileNames = {"busy_day.in", "redundancy.in", "mother_of_all_warehouses.in"};
+
+        for (String fileName : fileNames) {
+            LOGGER.info("File " + fileName + " loading");
+            World world = inputReader.parse("/" + fileName);
+            final List<ScoreDrone> drones = outputFileReader.parse("/output_" + fileName, world);
+            LOGGER.info("Score Processing");
+            LOGGER.info("Score => " + scoreProcessor.computeScore(world, drones));
+        }
+    }
+}

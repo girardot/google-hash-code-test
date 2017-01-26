@@ -16,11 +16,15 @@ public class ScoreProcessor {
     public final Logger LOGGER = getLogger(ScoreProcessor.class);
 
     public int computeScore(World world, List<Drone> drones, List<Warehouse> warehousesAtBeginning) {
-        int score = 0;
-        final Set<OrderItem> itemsDone = new HashSet<>();
         final List<ScoreDrone> scoreDrones = drones.stream()
                 .map(d -> new ScoreDrone(d.index, d.instructions, world.maxPayLoad, world.productTypeWeigh, warehousesAtBeginning))
                 .collect(Collectors.toList());
+        return computeScore(world, scoreDrones);
+    }
+
+    public int computeScore(World world, List<ScoreDrone> scoreDrones) {
+        int score = 0;
+        final Set<OrderItem> itemsDone = new HashSet<>();
 
         for (int turn = 0; turn < world.turns; turn++) {
 

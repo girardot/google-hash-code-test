@@ -63,6 +63,31 @@ public class Instruction {
         return result;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Instruction that = (Instruction) o;
+
+        if (productType != that.productType) return false;
+        if (productNumber != that.productNumber) return false;
+        if (instructionType != that.instructionType) return false;
+        if (wareHouse != null ? !wareHouse.equals(that.wareHouse) : that.wareHouse != null) return false;
+        return !(order != null ? !order.equals(that.order) : that.order != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = instructionType != null ? instructionType.hashCode() : 0;
+        result = 31 * result + (wareHouse != null ? wareHouse.hashCode() : 0);
+        result = 31 * result + productType;
+        result = 31 * result + productNumber;
+        result = 31 * result + (order != null ? order.hashCode() : 0);
+        return result;
+    }
+
     public Position getDestination() {
         Position destination = null;
         if (LOAD.equals(instructionType)) {
