@@ -13,6 +13,7 @@ public class World {
     public List<Cache> caches = new ArrayList<>();
 
     public List<Endpoint> endPoints = new ArrayList<>();
+    public List<Requests> Requests = new ArrayList<>();
 
     public void write(String outputName) throws IOException {
         final OutputStream outputStream = new FileOutputStream(outputName);
