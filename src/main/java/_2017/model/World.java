@@ -36,6 +36,15 @@ public class World {
 
     @Override
     public String toString() {
-        return String.format("World{videos(%d)=%s, caches=%s, endPoints(%d)=%s}",videos.size(), videos, caches,endPoints.size(), endPoints);
+        return String.format("World{videos(%d)=%s,\n caches=%s, \n endPoints(%d)=%s, \nrequests (%d)=%s}" +
+                "",videos.size(), videos, caches,endPoints.size(), endPoints,requests.size(),requests);
+    }
+
+    public Endpoint findEndPoint(int endPointId) {
+        return endPoints.get(endPointId);
+    }
+
+    public Video findVideo(int videoId) {
+        return videos.get(videoId);
     }
 }

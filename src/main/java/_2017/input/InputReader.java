@@ -34,6 +34,8 @@ public class InputReader {
             Pair<Integer, List<Endpoint>> result = parseEndPoints(endPointCount, collectedLines, cacheCount);
             world.endPoints = result._2;
 
+            world.requests = parseRequests(world, result._1,requestCount,collectedLines);
+
             world.caches = parseCaches(cacheCount, split[4]);
             return world;
 
@@ -41,6 +43,25 @@ public class InputReader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private List<Requests> parseRequests(World world, Integer position, Integer requestCount, List<String> collectedLines) {
+
+        List<Requests> requestsList = new ArrayList<>();
+        for (int i = 0; i < requestCount; i++) {
+            int[] requestParam = splitToInt(collectedLines.get(position++));
+
+            Requests requests = new Requests();
+            requests.count = requestParam[2];
+            requests.videoId = requestParam[0];
+            requests.endPointId = requestParam[1];
+
+            requests.endPoint = world.findEndPoint(requests.endPointId);
+            requests.video = world.findVideo(requests.videoId);
+
+            requestsList.add(requests);
+        }
+        return requestsList;
     }
 
     private List<Cache> parseCaches(int cacheCount, int size) {
