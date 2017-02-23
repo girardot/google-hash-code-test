@@ -1,9 +1,6 @@
 package _2017.input;
 
-import _2017.model.Endpoint;
-import _2017.model.Pair;
-import _2017.model.Video;
-import _2017.model.World;
+import _2017.model.*;
 import com.google.common.collect.ImmutableMap;
 
 import java.io.FileNotFoundException;
@@ -36,12 +33,20 @@ public class InputReader {
             world.videos = parseVideo(videoCount, collectedLines.get(1));
             Pair<Integer, List<Endpoint>> result = parseEndPoints(endPointCount, collectedLines, cacheCount);
             world.endPoints = result._2;
+
+            world.caches = parseCaches(cacheCount, split[4]);
             return world;
 
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private List<Cache> parseCaches(int cacheCount, int size) {
+        return IntStream.range(0,cacheCount)
+                .mapToObj(index -> new Cache(size))
+                .collect(Collectors.toList());
     }
 
     private Pair<Integer, List<Endpoint>> parseEndPoints(int endPointCount, List<String> collectedLines, int cacheCount) {

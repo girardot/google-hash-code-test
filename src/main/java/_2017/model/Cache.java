@@ -34,4 +34,13 @@ public class Cache {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Cache{" +
+                "size=" + size +
+                ", remaining=" + remaining +
+                ", videos=" + videos +
+                '}';
+    }
 }
