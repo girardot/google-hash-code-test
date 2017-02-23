@@ -9,12 +9,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         InputReader inputReader = new InputReader();
-        //String[] fileNames = {"kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in"};
-        String[] fileNames = {"kittens.in"};
+        String[] fileNames = {"kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in"};
+        //String[] fileNames = {"kittens.in"};
 
         final Processor processor = new SimpleProcessor();
         for (String fileName : fileNames) {
-            World world = inputReader.parse("/" + fileName);
+            World world = inputReader.parse(fileName);
             processor.process(world);
             world.write(fileName.replace(".in", ".out"));
         }
