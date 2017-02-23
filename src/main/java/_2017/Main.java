@@ -1,6 +1,7 @@
 package _2017;
 
 import _2017.input.InputReader;
+import _2017.model.World;
 
 import java.io.IOException;
 
@@ -10,7 +11,7 @@ public class Main {
         InputReader inputReader = new InputReader();
         String[] fileNames = {"file.in"};
         for (String fileName : fileNames) {
-            FakeModel world = inputReader.parse("/" + fileName);
+            World world = inputReader.parse("/" + fileName);
 
         }
 
