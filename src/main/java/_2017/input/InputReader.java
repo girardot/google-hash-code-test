@@ -79,12 +79,11 @@ public class InputReader {
             endpoint.latencyWithDataCenter = latencyWithDataCenter[0];
             endpoint.cacheCount = latencyWithDataCenter[1];
 
-            endpoint.latencyWithCaches = IntStream.range(0, cacheCount)
-                    .mapToObj(a -> -1).collect(Collectors.toList());
-            for (int j = 0; j < endpoint.cacheCount; j++) {
+             for (int j = 0; j < endpoint.cacheCount; j++) {
 
                 int[] cacheConf = splitToInt(collectedLines.get(indexInFile++));
-                endpoint.latencyWithCaches.set(cacheConf[0], cacheConf[1]);
+                 endpoint.latencyWithCaches .add(new CacheLatency(cacheConf[0], cacheConf[1]));
+
             }
 
             endpoints.add(endpoint);

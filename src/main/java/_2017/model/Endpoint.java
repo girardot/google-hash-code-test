@@ -1,12 +1,13 @@
 package _2017.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Endpoint {
 
     public int latencyWithDataCenter;
 
-    public List<Integer> latencyWithCaches;
+    public List<CacheLatency> latencyWithCaches = new ArrayList<>();
 
     public int cacheCount;
 
