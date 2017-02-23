@@ -17,7 +17,11 @@ public class SecondProcessor implements Processor {
             Video video = request.video;
             for (CacheLatency latencyWithCache : request.endPoint.latencyWithCaches) {
                 final Cache cache = world.caches.get(latencyWithCache.id);
-                final boolean added = cache.addVideo(world.videos.indexOf(video), video);
+                final int index = world.videos.indexOf(video);
+                if (cache.videos.contains(index)) {
+                    break;
+                }
+                final boolean added = cache.addVideo(index, video);
                 if (added) {
                     break;
                 }
