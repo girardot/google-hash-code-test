@@ -16,7 +16,7 @@ public class Main {
         String[] fileNames = {"kittens.in", "me_at_the_zoo.in", "trending_today.in", "videos_worth_spreading.in"};
         //String[] fileNames = {"kittens.in"};
 
-        final Processor processor = new SecondProcessor();
+        final Processor processor = new ThirdProcessor();
         for (String fileName : fileNames) {
             World world = inputReader.parse(fileName);
             processor.process(world);
