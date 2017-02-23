@@ -1,19 +1,18 @@
 package _2017.input;
 
 import _2017.model.*;
-import com.google.common.collect.ImmutableMap;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static java.lang.Integer.parseInt;
 
 public class InputReader {
 
@@ -21,22 +20,23 @@ public class InputReader {
 
         try (Stream<String> lines = Files.lines(Paths.get(InputReader.class.getResource("/" + fileName).toURI()))) {
 
-            List<String> collectedLines = lines.collect(Collectors.toList());
-            int[] split = splitToInt(collectedLines.get(0));
-            int videoCount = split[0];
-            int endPointCount = split[1];
-            int requestCount = split[2];
-            int cacheCount = split[3];
+            List<String> allLines = lines.collect(Collectors.toList());
+            int[] firstLine = splitToInt(allLines.get(0));
+
+            int videoCount = firstLine[0];
+            int endPointCount = firstLine[1];
+            int requestCount = firstLine[2];
+            int cacheCount = firstLine[3];
 
             World world = new World();
 
-            world.videos = parseVideo(videoCount, collectedLines.get(1));
-            Pair<Integer, List<Endpoint>> result = parseEndPoints(endPointCount, collectedLines, cacheCount);
+            world.videos = parseVideo(videoCount, allLines.get(1));
+            Pair<Integer, List<Endpoint>> result = parseEndPoints(endPointCount, allLines, cacheCount);
             world.endPoints = result._2;
 
-            world.requests = parseRequests(world, result._1,requestCount,collectedLines);
+            world.requests = parseRequests(world, result._1, requestCount, allLines);
 
-            world.caches = parseCaches(cacheCount, split[4]);
+            world.caches = parseCaches(cacheCount, firstLine[4]);
             return world;
 
         } catch (URISyntaxException | IOException e) {
@@ -65,7 +65,7 @@ public class InputReader {
     }
 
     private List<Cache> parseCaches(int cacheCount, int size) {
-        return IntStream.range(0,cacheCount)
+        return IntStream.range(0, cacheCount)
                 .mapToObj(index -> new Cache(size))
                 .collect(Collectors.toList());
     }
@@ -79,10 +79,10 @@ public class InputReader {
             endpoint.latencyWithDataCenter = latencyWithDataCenter[0];
             endpoint.cacheCount = latencyWithDataCenter[1];
 
-             for (int j = 0; j < endpoint.cacheCount; j++) {
+            for (int j = 0; j < endpoint.cacheCount; j++) {
 
                 int[] cacheConf = splitToInt(collectedLines.get(indexInFile++));
-                 endpoint.latencyWithCaches .add(new CacheLatency(cacheConf[0], cacheConf[1]));
+                endpoint.latencyWithCaches.add(new CacheLatency(cacheConf[0], cacheConf[1]));
 
             }
 
