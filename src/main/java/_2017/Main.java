@@ -21,6 +21,8 @@ public class Main {
             World world = inputReader.parse(fileName);
             processor.process(world);
             world.write(fileName.replace(".in", ".out"));
+            int score = world.computeScore();
+            System.out.println(fileName+" score "+score);
         }
 
         File file = new File("project.zip");

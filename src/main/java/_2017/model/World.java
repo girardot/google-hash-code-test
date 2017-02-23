@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class World {
 
@@ -38,7 +39,7 @@ public class World {
     @Override
     public String toString() {
         return String.format("World{videos(%d)=%s,\n caches=%s, \n endPoints(%d)=%s, \nrequests (%d)=%s}" +
-                "",videos.size(), videos, caches,endPoints.size(), endPoints,requests.size(),requests);
+                "", videos.size(), videos, caches, endPoints.size(), endPoints, requests.size(), requests);
     }
 
     public Endpoint findEndPoint(int endPointId) {
@@ -47,5 +48,32 @@ public class World {
 
     public Video findVideo(int videoId) {
         return videos.get(videoId);
+    }
+
+    public int computeScore() {
+        int score = 0;
+        for (Requests request : requests) {
+            Integer idCache = findCache(request.videoId);
+            int latency;
+            if (idCache != null) {
+                latency = request.endPoint.latencyWithCaches.stream()
+                        .filter(cacheLatency -> cacheLatency.id == idCache)
+                        .findFirst().get().latency;
+            } else {
+                latency = request.endPoint.latencyWithDataCenter;
+            }
+            score += request.count * latency;
+        }
+        return score;
+    }
+
+    private Integer findCache(int videoId) {
+        for (int i = 0; i < caches.size(); i++) {
+            Cache cach = caches.get(i);
+            if (cach.videos.contains(videoId)) {
+                return i;
+            }
+        }
+        return null;
     }
 }
