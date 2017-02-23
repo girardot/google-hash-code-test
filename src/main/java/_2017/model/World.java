@@ -35,10 +35,6 @@ public class World {
 
     @Override
     public String toString() {
-        return "World{" +
-                "videos=" + videos +
-                ", caches=" + caches +
-                ", endPoints=" + endPoints +
-                '}';
+        return String.format("World{videos(%d)=%s, caches=%s, endPoints(%d)=%s}",videos.size(), videos, caches,endPoints.size(), endPoints);
     }
 }

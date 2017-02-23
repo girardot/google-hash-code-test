@@ -9,4 +9,15 @@ public class Endpoint {
     public List<Integer> latencyWithCaches;
 
     public List<Integer> requestsPerVideo;
+    public int cacheCount;
+
+
+    @Override
+    public String toString() {
+        return "Endpoint{" +
+                "latencyWithDataCenter=" + latencyWithDataCenter +
+                ", latencyWithCaches=" + latencyWithCaches +
+                ", requestsPerVideo=" + requestsPerVideo +
+                '}';
+    }
 }
