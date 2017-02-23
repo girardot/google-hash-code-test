@@ -1,7 +1,5 @@
 package _2017.input;
 
-import _2017.model.FakeModel;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;

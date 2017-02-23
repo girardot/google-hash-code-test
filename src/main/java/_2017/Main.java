@@ -1,7 +1,6 @@
 package _2017;
 
 import _2017.input.InputReader;
-import _2017.model.FakeModel;
 
 import java.io.IOException;
 
