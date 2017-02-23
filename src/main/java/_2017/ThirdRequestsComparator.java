@@ -7,7 +7,8 @@ import java.util.Comparator;
 public class ThirdRequestsComparator implements Comparator<Requests> {
     @Override
     public int compare(Requests o1, Requests o2) {
-        final double factorSize = 0.8;
-        return (int) ((o1.count + factorSize * o1.video.size) - (o2.count + factorSize * o2.video.size));
+        final int reduce1 = o1.endPoint.latencyWithCaches.size();
+        final int reduce2 = o2.endPoint.latencyWithCaches.size();
+        return -(reduce2 - reduce1);
     }
 }

@@ -13,7 +13,10 @@ public class ThirdProcessor implements Processor {
         Collections.sort(world.requests, new ThirdRequestsComparator());
 
         for (Requests request : world.requests) {
-            Collections.sort(request.endPoint.latencyWithCaches, new ThirdCacheComparator(request.video, request.endPoint.latencyWithDataCenter));
+            Collections.sort(request.endPoint.latencyWithCaches, new ThirdCacheComparator(
+                    request.video,
+                    request.endPoint.latencyWithDataCenter
+            ));
             Video video = request.video;
             for (CacheLatency latencyWithCache : request.endPoint.latencyWithCaches) {
                 final Cache cache = world.caches.get(latencyWithCache.id);
